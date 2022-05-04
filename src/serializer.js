@@ -93,6 +93,11 @@ export class Serializer {
     return { type: res.type, id: res.id || null }
   }
 
+  getRelationAttributes(rel, data) {
+    const included = data.find(d => d.type === rel.type && d.id === rel.id)
+    return included ? included.attributes : { id: rel.id, type: rel.type }
+  }
+
   deserialize(res) {
     if (!res) {
       return null
@@ -141,6 +146,7 @@ export class Serializer {
         id: rec.id,
         ...rec.attributes,
       }
+      if (rec.meta) { attrs.meta = rec.meta }
 
       if (fields[rec.type]) {
         let ref
@@ -175,12 +181,9 @@ export class Serializer {
         if (!rel) return
 
         if (Array.isArray(rel)) {
-          rec.attributes[key] = rel.map(r => (
-            data.find(d => d.type === r.type && d.id === r.id)
-          )).filter(Boolean).map(r => r.attributes)
+          rec.attributes[key] = rel.map(r => this.getRelationAttributes(r, data))
         } else {
-          const child = data.find(r => r.type === rel.type && r.id === rel.id)
-          rec.attributes[key] = child ? child.attributes : null
+          rec.attributes[key] = this.getRelationAttributes(rel, data)
         }
       })
     })

@@ -228,7 +228,7 @@ export class ApiClient {
 
     const { type, relationships } = getTypeMap(query, this.schema, data)
 
-    const { invalidate, ...options } = config
+    const { invalidate, subscribe = false, ...options } = config
 
     if (!options.method) {
       options.method = query.id ? 'PATCH' : 'POST'
@@ -287,7 +287,7 @@ export class ApiClient {
         if (types.find(t => invalid.indexOf(t) >= 0)) {
           q.cache = null
 
-          if (q.subscribers.length) {
+          if (subscribe && q.subscribers.length) {
             this.fetch(q, { force: true })
           }
         }
