@@ -1,4 +1,4 @@
-declare module 'jsonapi-react' {
+declare module '@thetalententerprise/jsonapi-react' {
   interface IPlugin {
     initialize(client: ApiClient): void
   }
