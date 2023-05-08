@@ -1,6 +1,6 @@
 {
   "name": "@thetalententerprise/jsonapi-react",
-  "version": "0.0.27",
+  "version": "0.0.29",
   "description": "A minimal JSON:API client and React hooks for fetching, updating, and caching remote data.",
   "author": "thetalententerprise",
   "license": "MIT",
