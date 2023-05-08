@@ -59,14 +59,10 @@ export class Serializer {
       if (!ref.readOnly) {
         if (Array.isArray(val)) {
           rels[field] = {
-            data: val.map(v =>
-              this.parseRelationship(relType, v)
-            ),
+            data: val ? val.map(v => this.parseRelationship(relType, v)) : [],
           }
         } else {
-          rels[field] = {
-            data: this.parseRelationship(relType, val),
-          }
+          rels[field] = val ? { data: this.parseRelationship(relType, val) } : { data: null }
         }
       }
     }
