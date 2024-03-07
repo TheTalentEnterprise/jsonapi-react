@@ -1,4 +1,4 @@
-declare module 'jsonapi-react' {
+declare module '@thetalententerprise/jsonapi-react' {
   interface IPlugin {
     initialize(client: ApiClient): void
   }
@@ -53,15 +53,15 @@ declare module 'jsonapi-react' {
 
     delete(queryArg: QueryArg, config?: IConfig): Promise<IResult>
 
-    fetch(queryArg: QueryArg, config?: IConfig): Promise<IResult>
+    fetch<T = StringMap | StringMap[]>(queryArg: QueryArg, config?: IConfig): Promise<IResult<T>>
 
     isFetching(): boolean
 
-    mutate(
+    mutate<T = StringMap | StringMap[]>(
       queryArg: QueryArg,
       data: {} | [],
       config?: IConfig
-    ): Promise<IResult>
+    ): Promise<IResult<T>>
 
     removeHeader(key: string): ApiClient
   }
